@@ -594,10 +594,10 @@ public class backingBean {
             System.out.println("if errors-->");
         }
         
-        ViewObject vo = am.getLineVOStyleDetail1();
-        ViewObject h=am.getHederVO1();
-        h.clearCache();
-        vo.executeQuery();
+//        ViewObject vo = am.getLineVOStyleDetail1();
+//        ViewObject h=am.getHederVO1();
+//        h.clearCache();
+//        vo.executeQuery();
 
     }
 

@@ -624,8 +624,12 @@ public class AppModuleImpl extends ApplicationModuleImpl implements AppModule {
 
 
         String status = null;
+//        String stmt =
+//            "BEGIN  MNJ_WASHING_INTEGRATION_TO_ERP.MNJ_AUTO_CREATE_ROUTING(:1,:2 ,:3, :4, :5, :6, :7); end;";
+        
+        /**new procedure added for restructring  3/3/2021**/
         String stmt =
-            "BEGIN  MNJ_WASHING_INTEGRATION_TO_ERP.MNJ_AUTO_CREATE_ROUTING(:1,:2 ,:3, :4, :5, :6, :7); end;";
+            "BEGIN  MNJ_WASHING_INTEGRATION_TO_ERP.xx_mnj_auto_create_routing(:1,:2 ,:3, :4, :5, :6, :7); end;";
         java.sql.CallableStatement cs =
             getDBTransaction().createCallableStatement(stmt, 1);
 
