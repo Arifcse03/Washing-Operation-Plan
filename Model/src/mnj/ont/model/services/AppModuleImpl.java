@@ -918,7 +918,7 @@ public class AppModuleImpl extends ApplicationModuleImpl implements AppModule {
 
         String status = null;
         String stmt =
-            "BEGIN  MNJ_WASHING_INTEGRATION_TO_ERP.MNJ_CALL_PROCESS_MULTI_BOM(:1,:2 ,:3, :4, :5, :6, :7); end;";
+            "BEGIN  MNJ_WASHING_INTEGRATION_TO_ERP.XX_MNJ_CALL_PROCESS_MULTI_BOM(:1,:2 ,:3, :4, :5, :6, :7); end;";
         java.sql.CallableStatement cs =
             getDBTransaction().createCallableStatement(stmt, 1);
 
