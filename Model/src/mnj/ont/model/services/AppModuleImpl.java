@@ -597,12 +597,20 @@ public class AppModuleImpl extends ApplicationModuleImpl implements AppModule {
         String respAppl = (String)sessionScope.get("respAppl");
 
         String status = null;
-        status =
-                (String)callStoredFunction(VARCHAR2, "MNJ_WASHING_INTEGRATION_TO_ERP.CREATE_JOB(?, ?, ?, ?, ?)",
-                                           new Object[] { HeaderId, orgId,
-                                                          respId, user,
-                                                          respAppl });
+       
+//        status =
+//                (String)callStoredFunction(VARCHAR2, "MNJ_WASHING_INTEGRATION_TO_ERP.CREATE_JOB(?, ?, ?, ?, ?)",
+//                                           new Object[] { HeaderId, orgId,
+//                                                          respId, user,
+//                                                          respAppl });
+//        
+         /** create job function changed for restructring 3-3-2021**/
         
+         status =
+                         (String)callStoredFunction(VARCHAR2, "MNJ_WASHING_INTEGRATION_TO_ERP.xx_wip_create_job(?, ?, ?, ?, ?)",
+                                                    new Object[] { HeaderId, orgId,
+                                                                   respId, user,
+                                                                   respAppl });
         return status;
     }
 
