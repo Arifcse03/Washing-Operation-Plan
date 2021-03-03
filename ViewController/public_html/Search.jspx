@@ -93,7 +93,7 @@
                 </af:column>
                 <af:column headerText="System Id"
                            id="c12" align="center" sortable="true"
-                           filterable="true" sortProperty=".SystemId">
+                           filterable="true" sortProperty="SystemId">
                   <af:outputText value="#{row.SystemId}" id="ot12">
                     <af:convertNumber groupingUsed="false"
                                       pattern="#{bindings.HederVO1.hints.SystemId.format}"/>

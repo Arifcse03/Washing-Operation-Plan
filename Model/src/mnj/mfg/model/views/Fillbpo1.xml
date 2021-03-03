@@ -56,7 +56,7 @@ AND NOT EXISTS
 (SELECT *
 FROM MNJ_GWP_MFG_GEVALUATION h, MNJ_GWP_MFG_GE_OBSLINE l
 WHERE h.GWP_GE_ID = l.GWP_GE_ID
-AND OOLA.BPO_ID = OOLA.BPO_ID
+AND OOLA.BPO_ID = l.BPO_ID
 AND LOOHA.SYSTEM_ID = :1)]]>
   </SQLQuery>
   <ViewAttribute
@@ -170,7 +170,7 @@ AND LOOHA.SYSTEM_ID = :1)]]>
     ColumnType="DATE"
     AliasName="SHIPDATE"
     Expression="SHIPDATE"
-    SQLType="TIMESTAMP">
+    SQLType="DATE">
     <DesignTime>
       <Attr Name="_DisplaySize" Value="7"/>
     </DesignTime>
