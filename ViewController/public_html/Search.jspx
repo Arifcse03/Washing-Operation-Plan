@@ -171,12 +171,6 @@
                            sortProperty="Color" visible="false">
                   <af:outputText value="#{row.Color}" id="ot10"/>
                 </af:column>
-                <af:column headerText="Finish Goods Color"
-                           id="c11" align="center" sortable="true"
-                           filterable="true" sortProperty="FinishGoodsColor"
-                           filterFeatures="caseInsensitive">
-                  <af:outputText value="#{row.FinishGoodsColor}" id="ot11"/>
-                </af:column>
                 <af:column headerText="Wash"
                            id="c4" sortProperty="Wash" sortable="true"
                            filterable="true" align="center"

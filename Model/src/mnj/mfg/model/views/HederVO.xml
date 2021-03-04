@@ -253,7 +253,7 @@
       Hint="showAndExecute"/>
   </ListBinding>
   <SQLQuery>
-    <![CDATA[SELECT HederEO.GWP_GE_ID,
+    <![CDATA[SELECT distinct HederEO.GWP_GE_ID,
          HederEO.GWP_GE_NUMBER,
          HederEO.GE_DATE,
          HederEO.SALESORDER_ID,
@@ -298,79 +298,25 @@
           SELECT NULL FROM DUAL) PR_Num,
          HederEO.Color,
          /*case statement added by Mr. Sakibul Islam on requiremnet of Mr. Wasi Udin for showing finish_goods_color on 25.Mar.2020*/
-         (SELECT CASE
-                    WHEN    oola.ATTRIBUTE13 IS NULL
-                         OR oola.ATTRIBUTE13 = 'No entry'
-                    THEN
-                       TRIM (
-                          (SELECT FFV.DESCRIPTION
-                             FROM FND_FLEX_VALUES_VL FFV
-                            WHERE     FFV.FLEX_VALUE = msib.segment4
-                                  AND FFV.FLEX_VALUE_SET_ID = 1014895
-                                  AND FFV.ENABLED_FLAG = 'Y'
-                                  AND ROWNUM = 1         -- added on 27 nov 19
-                                                ))
-                    ELSE
-                       oola.ATTRIBUTE13
-                 END
-                    Finish_Goods_Color
-            FROM OE_ORDER_HEADERS_ALL OOHA,
-                 OE_ORDER_LINES_ALL OOLA,
-                 MTL_SYSTEM_ITEMS MSIb
-           WHERE     1 = 1
-                 AND OOHA.HEADER_ID = OOLA.HEADER_ID
-                 AND MSIb.INVENTORY_ITEM_ID = OOLA.INVENTORY_ITEM_ID -- added on 18 feb 20
-                 AND MSIb.ORGANIZATION_ID = 353
-                 AND ooha.SHIPPING_INSTRUCTIONS = HederEO.STYLE     --'569350'
-                 AND ooha.ATTRIBUTE4 = HederEO.SEASON           --'C3-20 Fall'
-                 AND ooha.SOLD_TO_ORG_ID = HederEO.Customer_Id        --'1052'
-                 AND msib.attribute17 = HederEO.WASH         --'BB MH Table#1'
-                 AND ROWNUM = 1)
-            Finish_Goods_Color,
+        
          HederEO.Transaction_Date,
          HederEO.WASH_CATAGORY,
-         (SELECT DECODE (StyleLineEO.TRACK_BASIS,
-                         'Style Name', StyleLineEO.STYLE_NAME,
-                         'Style Number', StyleLineEO.STYLE_NUMBER)
-            FROM PWC_MFG_BSS_STYLE_L StyleLineEO,
-                 pwc_mfg_bss_buyer_h pwcmfgbssbuyerh
-           WHERE     StyleLineEO.STYLE_IDENTIFIER = HederEO.Style --HeaderEO.STYLE
-                 AND pwcmfgbssbuyerh.BUYER_ID = HederEO.Customer_Id --HeaderEO.BUYER_ID
-                 --AND   pwcmfgbssbuyerh.ORG_ID = HeaderEO.ORG_ID
-                 AND StyleLineEO.HEADER_ID = pwcmfgbssbuyerh.HEADER_ID
-                 AND ROWNUM = 1)
-            CURRENT_STYLE,
-         (SELECT SeasonDetailEO.SEASON_NAME
-            FROM PWC_MFG_BSS_STYLE_L StyleLineEO,
-                 pwc_mfg_bss_buyer_h pwcmfgbssbuyerh,
-                 PWC_MFG_BSS_SEASON_D SeasonDetailEO
-           WHERE     StyleLineEO.STYLE_IDENTIFIER = HederEO.Style --HeaderEO.STYLE
-                 AND SeasonDetailEO.SEASON_IDENTIFIER = HederEO.Season --HeaderEO.SEASON
-                 AND pwcmfgbssbuyerh.BUYER_ID = HederEO.Customer_Id --HeaderEO.BUYER_ID
-                 --AND   pwcmfgbssbuyerh.ORG_ID = HeaderEO.ORG_ID
-                 AND StyleLineEO.HEADER_ID = pwcmfgbssbuyerh.HEADER_ID
-                 AND SeasonDetailEO.LINE_ID = StyleLineEO.LINE_ID
-                 AND ROWNUM = 1)
-            CURRENT_SEASON,
+       
+         /* added by wasi uddin to get job name by system id 4 march 2021 */
          (SELECT WIP_ENTITY_NAME job_name
-            FROM wip_discrete_jobs_v d
-           WHERE     1 = 1
-                 --    and d.attribute3 = :header_id
-                 --AND d.attribute2 = j1_rec.DESCRIPTION||'-'||j1_rec.SEASON
-                 AND d.attribute6 = H.STYLE
-                 AND d.attribute7 = H.SEASON
-                 AND d.attribute8 = l.COLOR
-                 AND d.attribute9 = l.WASH_Name
-                 AND d.Status_Type NOT IN (7, 12)
-                 AND d.class_code = 'WASH'
-                 AND d.attribute_category = 'WASHING'
-                 --and  HederEO.ORG_ID = d.ORGANIZATION_ID   --commented on --29.aug.2018 as org id != organization id
+FROM wip_discrete_jobs_v d
+WHERE 1 = 1
+AND d.class_code = 'WASH'
+AND d.attribute_category = 'WASHING'
+AND D.ATTRIBUTE10= to_char(L.System_id)
+AND d.Status_Type NOT IN (7, 12)
+and d.ORGANIZATION_ID=
+(SELECT organization_id
+FROM org_organization_definitions
+WHERE operating_unit = HederEO.ORG_ID)
+)
 
-                 AND d.ORGANIZATION_ID =
-                        (SELECT organization_id
-                           FROM org_organization_definitions
-                          WHERE operating_unit = HederEO.ORG_ID))
-            JOB_NAME,
+JOB_NAME ,
          (  SELECT SUM (OL.ORDERED_QUANTITY) ORDERED_QTY
               FROM OE_ORDER_HEADERS_ALL OH, OE_ORDER_LINES_ALL OL
              WHERE     1 = 1
@@ -757,21 +703,6 @@ ORDER BY HederEO.GWP_GE_ID DESC]]>
     </Properties>
   </ViewAttribute>
   <ViewAttribute
-    Name="FinishGoodsColor"
-    IsUpdateable="false"
-    IsPersistent="false"
-    PrecisionRule="true"
-    Precision="240"
-    Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    AliasName="FINISH_GOODS_COLOR"
-    Expression="FINISH_GOODS_COLOR"
-    SQLType="VARCHAR">
-    <DesignTime>
-      <Attr Name="_DisplaySize" Value="240"/>
-    </DesignTime>
-  </ViewAttribute>
-  <ViewAttribute
     Name="TransactionDate"
     PrecisionRule="true"
     AliasName="TRANSACTION_DATE"
@@ -788,48 +719,6 @@ ORDER BY HederEO.GWP_GE_ID DESC]]>
       <SchemaBasedProperties>
         <CONTROLTYPE
           Value="choice"/>
-      </SchemaBasedProperties>
-    </Properties>
-  </ViewAttribute>
-  <ViewAttribute
-    Name="CurrentStyle"
-    IsUpdateable="false"
-    IsPersistent="false"
-    PrecisionRule="true"
-    Precision="250"
-    Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    AliasName="CURRENT_STYLE"
-    Expression="CURRENT_STYLE"
-    SQLType="VARCHAR">
-    <DesignTime>
-      <Attr Name="_DisplaySize" Value="250"/>
-    </DesignTime>
-    <Properties>
-      <SchemaBasedProperties>
-        <DISPLAYWIDTH
-          Value="30"/>
-      </SchemaBasedProperties>
-    </Properties>
-  </ViewAttribute>
-  <ViewAttribute
-    Name="CurrentSeason"
-    IsUpdateable="false"
-    IsPersistent="false"
-    PrecisionRule="true"
-    Precision="250"
-    Type="java.lang.String"
-    ColumnType="VARCHAR2"
-    AliasName="CURRENT_SEASON"
-    Expression="CURRENT_SEASON"
-    SQLType="VARCHAR">
-    <DesignTime>
-      <Attr Name="_DisplaySize" Value="250"/>
-    </DesignTime>
-    <Properties>
-      <SchemaBasedProperties>
-        <DISPLAYWIDTH
-          Value="30"/>
       </SchemaBasedProperties>
     </Properties>
   </ViewAttribute>

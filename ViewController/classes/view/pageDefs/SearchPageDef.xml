@@ -28,11 +28,11 @@
           <Item Value="Wash"/>
           <Item Value="VarsionNew"/>
           <Item Value="PrNum"/>
-          <Item Value="CurrentStyle"/>
-          <Item Value="CurrentSeason"/>
+         
+          
           <Item Value="JobName"/>
           <Item Value="Color"/>
-          <Item Value="FinishGoodsColor"/>
+         
           <Item Value="SystemId"/>
           <Item Value="BuyerNameNew"/>
           <Item Value="StyleNew"/>

@@ -385,11 +385,7 @@
         <Item Value="n"/>
       </ValueList>
     </button>
-    <attributeValues IterBinding="HederVO1Iterator" id="FinishGoodsColor">
-      <AttrNames>
-        <Item Value="FinishGoodsColor"/>
-      </AttrNames>
-    </attributeValues>
+    
     <listOfValues StaticList="false" IterBinding="HederVO1Iterator"
                   Uses="LOV_SystemId" id="SystemId"/>
     <attributeValues IterBinding="HederVO1Iterator" id="BuyerNameNew">
