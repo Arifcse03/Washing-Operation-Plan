@@ -51,7 +51,8 @@
           </af:inputText>
           <af:panelLabelAndMessage label="Finish Goods Color"
                                    id="plam8"
-                                   inlineStyle="background-color:rgb(214,226,230);">
+                                   inlineStyle="background-color:rgb(214,226,230);"
+                                   visible="false">
             <af:outputText value="#{bindings.FinishGoodsColor.inputValue}"
                            id="ot17"/>
           </af:panelLabelAndMessage>

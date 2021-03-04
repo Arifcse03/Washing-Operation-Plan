@@ -234,19 +234,11 @@
     <AttrArray Name="DerivedAttrNames">
       <Item Value="CustomerId"/>
       <Item Value="CustomerName"/>
-      <Item Value="Style"/>
-      <Item Value="Season"/>
-      <Item Value="Color"/>
-      <Item Value="Wash"/>
     </AttrArray>
     <AttrArray Name="ListAttrNames">
       <Item Value="SystemId"/>
       <Item Value="BuyerId"/>
       <Item Value="Buyer"/>
-      <Item Value="Style"/>
-      <Item Value="Season"/>
-      <Item Value="Color"/>
-      <Item Value="Wash"/>
     </AttrArray>
     <AttrArray Name="ListDisplayAttrNames">
       <Item Value="SystemId"/>
@@ -365,10 +357,10 @@
            WHERE     1 = 1
                  --    and d.attribute3 = :header_id
                  --AND d.attribute2 = j1_rec.DESCRIPTION||'-'||j1_rec.SEASON
-                 AND d.attribute6 = HederEO.STYLE
-                 AND d.attribute7 = HederEO.SEASON
-                 AND d.attribute8 = HederEO.COLOR
-                 AND d.attribute9 = HederEO.WASH
+                 AND d.attribute6 = H.STYLE
+                 AND d.attribute7 = H.SEASON
+                 AND d.attribute8 = l.COLOR
+                 AND d.attribute9 = l.WASH_Name
                  AND d.Status_Type NOT IN (7, 12)
                  AND d.class_code = 'WASH'
                  AND d.attribute_category = 'WASHING'
