@@ -302,7 +302,7 @@
          HederEO.Transaction_Date,
          HederEO.WASH_CATAGORY,
        
-         
+         /* added by wasi uddin to get job name by system id 4 march 2021 */
          (SELECT WIP_ENTITY_NAME job_name
 FROM wip_discrete_jobs_v d
 WHERE 1 = 1
