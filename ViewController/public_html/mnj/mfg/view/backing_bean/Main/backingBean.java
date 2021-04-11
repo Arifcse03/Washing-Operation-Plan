@@ -52,6 +52,7 @@ public class backingBean {
     private RichOutputText seasonnew;
     private RichOutputText colornew;
     private RichOutputText washnew;
+    private RichTable livevostyleTable;
 
 
     public backingBean() {
@@ -691,6 +692,7 @@ public class backingBean {
         OperationBinding operationBinding =
             executeOperation("DeleteStyleDetail");
         operationBinding.execute();
+         AdfFacesContext.getCurrentInstance().addPartialTarget(livevostyleTable);
     }
 
     public void CallPost(ActionEvent actionEvent) {
@@ -850,5 +852,13 @@ public class backingBean {
 
     public RichOutputText getWashnew() {
         return washnew;
+    }
+
+    public void setLivevostyleTable(RichTable livevostyleTable) {
+        this.livevostyleTable = livevostyleTable;
+    }
+
+    public RichTable getLivevostyleTable() {
+        return livevostyleTable;
     }
 }

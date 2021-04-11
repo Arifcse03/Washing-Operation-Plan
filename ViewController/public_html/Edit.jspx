@@ -270,7 +270,8 @@
                       selectedRowKeys="#{bindings.LineVOStyleDetail1.collectionModel.selectedRow}"
                       selectionListener="#{bindings.LineVOStyleDetail1.collectionModel.makeCurrent}"
                       rowSelection="single" id="t1"
-                      partialTriggers="::cb3 ::cb4">
+                      partialTriggers="::cb3 ::cb4"
+                      binding="#{pageFlowScope.backingBean.livevostyleTable}">
               <af:column headerText="BPO ID"
                          id="c72" align="center" sortable="true"
                          filterable="true" sortProperty="BpoId">

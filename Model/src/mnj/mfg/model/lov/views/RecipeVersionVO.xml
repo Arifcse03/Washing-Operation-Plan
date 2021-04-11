@@ -32,7 +32,7 @@
              THEN 'Original'
           ELSE TO_CHAR (version_no)
        END version_number
-       
+       /* updated by arif 11/4/2021
   FROM mnj_mfg_wash_recipe_h mwh
  WHERE mwh.customer_id = :1
    AND mwh.style_name = :2
@@ -47,7 +47,18 @@
               AND mmwh.style_name = :2
               AND mmwh.season = :3
               AND mmwh.wash = :4
-              AND mmwh.color = :5)]]>
+              AND mmwh.color = :5)*/
+ FROM mnj_mfg_wash_recipe_h mwh
+ WHERE mwh.system_id = :1
+   
+
+   AND mwh.sample_type = 'Shade Band'
+   AND mwh.header_id =
+          (SELECT MAX (mmwh.header_id)
+             FROM mnj_mfg_wash_recipe_h mmwh
+            WHERE mmwh.system_id= :1
+              
+            )]]>
   </SQLQuery>
   <ViewAttribute
     Name="HeaderId"

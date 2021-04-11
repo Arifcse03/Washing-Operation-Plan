@@ -203,7 +203,8 @@ public class AppModuleImpl extends ApplicationModuleImpl implements AppModule {
         String Season = null;
         String Wash = null;
         String Color = null;
-
+        String SystemId= null;
+/*** ommited by airf to search by system id only
         try {
             Style = vo.getCurrentRow().getAttribute("Style").toString();
         } catch (Exception e) {
@@ -242,18 +243,30 @@ public class AppModuleImpl extends ApplicationModuleImpl implements AppModule {
             // TODO: Add catch code
             Color = null;
             e.printStackTrace();
+        }***/
+        try {
+            SystemId = vo.getCurrentRow().getAttribute("SystemId").toString();
+        } catch (Exception e) {
+            // TODO: Add catch code
+            SystemId = null;
+            e.printStackTrace();
         }
+      
 
-
+//        System.out.println("Parameters for Populate Operations are..............." +
+//                           Style + Season + BuyerID + Wash + Color);
         System.out.println("Parameters for Populate Operations are..............." +
-                           Style + Season + BuyerID + Wash + Color);
+                         SystemId );
         ViewObject populatevo = getRecipeVersionVO1(); // Populate VO
         populatevo.setWhereClause(null);
+      //  populatevo.setWhereClauseParam(0, BuyerID);
+        populatevo.setWhereClauseParam(0, SystemId);
+        /**** ommited by airf to search by system id only
         populatevo.setWhereClauseParam(0, BuyerID);
         populatevo.setWhereClauseParam(1, Style);
         populatevo.setWhereClauseParam(2, Season);
         populatevo.setWhereClauseParam(3, Wash);
-        populatevo.setWhereClauseParam(4, Color);
+        populatevo.setWhereClauseParam(4, Color);*/
         populatevo.executeQuery();
         populatevo.first();
         System.out.println("Query @ populate..............." +
@@ -1210,7 +1223,7 @@ public class AppModuleImpl extends ApplicationModuleImpl implements AppModule {
         String Buyer = null;
         String Wash = null;
         String Color = null;
-
+       String SystemId=null;
         String HeaderId = null;
         System.out.println("In method DeleteStyleDetail.....");
         ViewObject voh = getHederVO1();
